@@ -63,7 +63,7 @@ cars_schema = CarSchema(many=True)
 # TODO: Add your schemas below
 class TableSchema(ma.Schema):
     id=fields.Integer(primary_key=True)
-    party_size=fields.Time(required=True)
+    party_size=fields.Integer(required=True)
     is_reserved=fields.Boolean(required=True)
     class Meta:
         fields=("id","party_size","is_reserved")
@@ -80,7 +80,7 @@ class ReservationsSchema(ma.Schema):
     time=fields.Time(required=True)
     date=fields.Date(required=True)
     party_count=fields.Integer(required=True)
-    costumer_id=fields.Integer(required=True)
+    costumer_id=fields.Integer()
     user = ma.Nested(UserSchema, many=False)
     table_id=fields.Integer(required=True)
     table=ma.Nested(TableSchema, many=False)
@@ -110,7 +110,7 @@ class ReviewsSchema(ma.Schema):
     id=fields.Integer(primary_key=True)
     review_text=fields.String(required=True)
     rating=fields.Integer(required=True)
-    costumer_id=fields.Integer(required=True)
+    costumer_id=fields.Integer()
     user = ma.Nested(UserSchema, many=False)
     class Meta:
         fields=("id","review_text","rating","costumer_id")

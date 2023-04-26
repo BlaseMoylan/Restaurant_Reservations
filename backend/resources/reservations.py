@@ -61,7 +61,8 @@ class AllTablesResource(Resource):
     
     def delete(self):
         tables=Table.query.all()
-        db.session.delete(tables)
+        for table in tables:
+            db.session.delete(table)
         db.session.commit()
         return '', 204
 
@@ -102,22 +103,25 @@ class AllReviewsResource(Resource):
 class SetScheduleResource(Resource):
     def post(self):
         form_data=request.get_json()
-        new_table=table_schema.load(form_data)
-        db.session.add(new_table)
+        new_schedule=schedule_schema.load(form_data)
+        db.session.add(new_schedule)
         db.session.commit()
-        return table_schema.dump(new_table), 201
+        return schedule_schema.dump(new_schedule), 201
     
     def get(self):
-        all_tables = Table.query.all()
-        return tables_schema.dump(all_tables),200
+        all_schedules = Schedule.query.all()
+        return schedules_schema.dump(all_schedules),200
     
 class UpdateScheduleResource(Resource):
     def put(self, pk):
         schedule=Schedule.query.get_or_404(pk)
         form_data=request.get_json()
-        form_data['day']=schedule.day
-        form_data['opening']=schedule.opening
-        form_data['closing']=schedule.closing
+        print(schedule.closing)
+        print(form_data['closing'])
+        print(form_data['day'])
+        schedule.day=form_data['day']
+        schedule.opening=form_data['opening']
+        schedule.closing=form_data['closing']
         db.session.commit()
         return schedule_schema.dump(schedule), 200
 
