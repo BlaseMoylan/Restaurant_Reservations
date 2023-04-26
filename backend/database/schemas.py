@@ -82,7 +82,7 @@ class ReservationsSchema(ma.Schema):
     party_count=fields.Integer(required=True)
     costumer_id=fields.Integer(required=True)
     user = ma.Nested(UserSchema, many=False)
-    table_id=fields(required=True)
+    table_id=fields.Integer(required=True)
     table=ma.Nested(TableSchema, many=False)
     class Meta:
         fields=("id","time","date","party_count","costumer_id","table_id")
