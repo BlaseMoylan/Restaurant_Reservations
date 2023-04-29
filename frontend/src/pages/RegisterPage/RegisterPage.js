@@ -6,10 +6,11 @@ const RegisterPage = () => {
   const { registerUser } = useContext(AuthContext);
   const defaultValues = {
     username: "",
-    email: "",
+    phone: "",
     password: "",
     firstName: "",
     lastName: "",
+    is_admin:false
   };
   const [formData, handleInputChange, handleSubmit] = useCustomForm(
     defaultValues,
@@ -47,11 +48,11 @@ const RegisterPage = () => {
           />
         </label>
         <label>
-          Email:{" "}
+          Phone:{" "}
           <input
-            type="text"
-            name="email"
-            value={formData.email}
+            type="integer"
+            name="phone"
+            value={formData.phone}
             onChange={handleInputChange}
           />
         </label>
@@ -63,6 +64,9 @@ const RegisterPage = () => {
             value={formData.password}
             onChange={handleInputChange}
           />
+        </label>
+        <label>
+          <button onClick={()=>formData.is_admin=true}>Register as Admin</button>
         </label>
         <button>Register!</button>
       </form>

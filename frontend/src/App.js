@@ -8,7 +8,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import ReviewsPage from "./pages/ReviewsPage/ReviewsPage";
-import Schedule from "./pages/Schedule/schedule";
+import Schedule from "./pages/Schedule/Schedule";
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
