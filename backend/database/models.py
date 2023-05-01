@@ -42,7 +42,7 @@ class Reservations(db.Model):
     time=db.Column(db.Time, nullable=False)
     date=db.Column(db.Date, nullable=False)
     party_count=db.Column(db.Integer, nullable=False)
-    custumer_id=db.Column(db.Integer, db.ForeignKey('user.id'))
+    costumer_id=db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship("User")
     table_id=db.Column(db.Integer, db.ForeignKey('table.id'))
     table=db.relationship("Table")
