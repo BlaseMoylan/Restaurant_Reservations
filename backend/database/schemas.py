@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Car, Table, Reservations,Wait_List,Reviews,Schedule
+from database.models import User, Car, Table, Reservations,Wait_List,Reviews,Schedule,TableSetUp,UsedTables
 
 ma = Marshmallow()
 
@@ -134,3 +134,31 @@ class ScheduleSchema(ma.Schema):
 
 schedule_schema = ScheduleSchema()
 schedules_schema = ScheduleSchema(many=True)
+
+class TableSetUpSchema(ma.Schema):
+    id=fields.Integer(primary_key=True)
+    table_size=fields.Integer(required=True)
+    num_of_tables=fields.Integer(required=True)
+    class Meta:
+        fields=("id","table_size","num_of_tables")
+    @post_load
+    def create_table_set_up(self, data, **kwargs):
+        return TableSetUp(**data)
+
+table_set_up_schema = TableSetUpSchema()
+tables_set_up_schema = TableSetUpSchema(many=True)
+
+class UsedTablesSchema(ma.Schema):
+    id=fields.Integer(primary_key=True)
+    day=fields.Date(required=True)
+    hour=fields.Time(required=True)
+    table_id=fields.Integer(required=True)
+    table=ma.Nested(TableSchema, many=False)
+    class Meta:
+            fields=("id","day","hour","table_id")
+    @post_load
+    def create_used_tables(self, data, **kwargs):
+        return UsedTables(**data)
+
+used_table_schema = UsedTablesSchema()
+used_tables_schema = UsedTablesSchema(many=True)

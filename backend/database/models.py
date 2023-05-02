@@ -64,3 +64,15 @@ class Schedule(db.Model):
     day=db.Column(db.Date, nullable=False)
     opening=db.Column(db.Time, nullable=False)
     closing=db.Column(db.Time, nullable=False)
+
+class TableSetUp(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    table_size=db.Column(db.Integer,nullable=False)
+    num_of_tables=db.Column(db.Integer, nullable=False)
+
+class UsedTables(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    day=db.Column(db.Date, nullable=False)
+    hour=db.Column(db.Time, nullable=False)
+    table_id=db.Column(db.Integer, db.ForeignKey('table.id'))
+    table=db.relationship("Table")
