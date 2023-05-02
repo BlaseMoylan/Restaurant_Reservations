@@ -50,7 +50,7 @@ const AddReservation = ({user, auth}) => {
         })
         console.log("it is here")
         console.log(id)
-        id=setTableId(id)
+        setTableId(id)
         console.log(tableId)
     }
 
