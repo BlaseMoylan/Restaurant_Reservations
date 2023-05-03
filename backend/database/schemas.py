@@ -123,7 +123,7 @@ reviews_schema = ReviewsSchema(many=True)
 
 class ScheduleSchema(ma.Schema):
     id=fields.Integer(primary_key=True)
-    day=fields.Date(required=True)
+    day=fields.String(required=True)
     opening=fields.Time(required=True)
     closing=fields.Time(required=True)
     class Meta:

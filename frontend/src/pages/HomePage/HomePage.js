@@ -15,14 +15,16 @@ const HomePage = () => {
   const [user, token] = useAuth();
   const auth= "Bearer " + token
   console.log(auth)
-  if(user.is_admin==false){
+  console.log(user)
+  if(user.is_admin!==true){
     return (
       <main>
         <h1>Welcome!</h1>
         <UserReservations user={user} auth={auth}/>
         <AddReservation user={user} auth={auth}/>
       </main>
-  );}
+    )
+  }
   else{
     return(
       <AdminPage/>

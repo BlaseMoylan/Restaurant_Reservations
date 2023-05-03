@@ -36,7 +36,8 @@ class LoginResource(Resource):
         additional_claims = {
             'id': user.id,
             'username': user.username,
-            'first_name': user.first_name
+            'first_name': user.first_name,
+            'is_admin':user.is_admin
         }
         access_token = create_access_token(identity=str(user.id), additional_claims=additional_claims, expires_delta=expires)
         return {'access': access_token}, 200

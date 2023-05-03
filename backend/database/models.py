@@ -61,7 +61,7 @@ class Reviews(db.Model):
 
 class Schedule(db.Model):
     id=db.Column(db.Integer, primary_key=True)
-    day=db.Column(db.Date, nullable=False)
+    day=db.Column(db.String(255), nullable=False)
     opening=db.Column(db.Time, nullable=False)
     closing=db.Column(db.Time, nullable=False)
 

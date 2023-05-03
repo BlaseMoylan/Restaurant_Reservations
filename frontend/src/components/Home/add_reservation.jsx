@@ -41,9 +41,7 @@ const AddReservation = ({user, auth}) => {
         // get this on the backend side connected to an end point
         let id=0
         let Id=tables.filter((item)=>{
-            if(item.is_reserved==false && item.party_size==table_size){
-                item.is_reserved=true
-                
+            if(item.party_size==table_size){
                 id=item.id
                 return true
             }

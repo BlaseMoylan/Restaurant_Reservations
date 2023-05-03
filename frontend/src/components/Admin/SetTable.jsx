@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 const SetTable = ({user,auth}) => {
     const [tableSetUp,setTableSetUp]=useState([])
     const [table_size,setTableSize]= useState(0)
     const [numOfTables,setNumOfTables]= useState(0)
+    const [day,setDay]=useState("")
+    const [opening,setOpening]=useState("")
+    const [closing,setClosing]=useState("")
 
     // will need a useEffect to get it to show on first run through
     async function getTableSetUp(){
         let results=await axios.get('http://127.0.0.1:5000/api/table_set_up')
         setTableSetUp(results.data)
     }
-    
+    useEffect(() => {
+        getTableSetUp()
+    }, []);
+
+
     function handleSubmit(event){
         
         event.preventDefault()
@@ -20,6 +27,17 @@ const SetTable = ({user,auth}) => {
         }
         postTableSetUp(form)
     }
+
+    function handleSubmit2(event){
+        event.preventDefault()
+        let form={
+            day:day,
+            opening:opening,
+            closing:closing
+        }
+        postSchedule(form)
+    }
+
     async function postTableSetUp(form){
         // console.log("it is here")
         // let is_true=false
@@ -40,9 +58,12 @@ const SetTable = ({user,auth}) => {
         getTableSetUp()
         postTables(form)
         // }
-        
-        
     }
+
+    async function postSchedule(form){
+        let results=await axios.post(`http://127.0.0.1:5000/api/set_schedule`,form)
+    }
+
     async function postTables(form){
         for(let i=0;i<form.num_of_tables;i++){
             let data={party_size:form.table_size,is_reserved:false}
@@ -51,6 +72,7 @@ const SetTable = ({user,auth}) => {
     }
     return ( 
         <div>
+            
             <table>
                 
                 <thead>
@@ -70,6 +92,23 @@ const SetTable = ({user,auth}) => {
                     })}
                 </tbody>
             </table>
+            <form onSubmit={handleSubmit2}>
+                    <div>
+                        <lable>day</lable>
+                        <input type="string" value={day} onChange={(event)=>setDay(event.target.value)}/>
+                    </div>
+                    <div>
+                        <label>opening hours</label>
+                        <input type="time" value={opening} onChange={(event)=>setOpening(event.target.value)}/>
+                    </div>
+                    <div>
+                        <label>closing hours</label>
+                        <input type="time" value={closing} onChange={(event)=>setClosing(event.target.value)}/>
+                    </div>
+                    <div>
+                    <button type="submit" className="btn btn-primary ">set schedule</button>
+                </div>
+            </form>
             <form onSubmit={handleSubmit}>
                 <div>
                     <lable>Table Size</lable>
