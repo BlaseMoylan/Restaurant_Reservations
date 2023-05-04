@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import AddReservation from "../../components/Home/add_reservation";
 import UserReservations from "../../components/Home/user_reservations";
+import AvailableTimesCalendar from "../../components/Home/AvailableTimesCalendar";
 import axios from "axios";
 import { UNSAFE_RouteContext } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -22,6 +23,7 @@ const HomePage = () => {
         <h1>Welcome!</h1>
         <UserReservations user={user} auth={auth}/>
         <AddReservation user={user} auth={auth}/>
+        <AvailableTimesCalendar/>
       </main>
     )
   }

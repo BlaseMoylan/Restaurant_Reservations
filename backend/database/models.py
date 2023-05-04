@@ -35,7 +35,6 @@ class Car(db.Model):
 class Table(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     party_size=db.Column(db.Integer, nullable=False)
-    is_reserved=db.Column(db.Boolean, nullable=False)
 
 class Reservations(db.Model):
     id=db.Column(db.Integer, primary_key=True)
@@ -49,8 +48,13 @@ class Reservations(db.Model):
 
 class Wait_List(db.Model):
     id=db.Column(db.Integer, primary_key=True)
-    reservation_id=db.Column(db.Integer, db.ForeignKey('reservations.id'))
-    reservation=db.relationship("Reservations")
+    time=db.Column(db.Time, nullable=False)
+    date=db.Column(db.Date, nullable=False)
+    table_id=db.Column(db.Integer, db.ForeignKey('table.id'))
+    table=db.relationship("Table")
+    costumer_id=db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship("User")
+
 
 class Reviews(db.Model):
     id=db.Column(db.Integer, primary_key=True)
@@ -72,7 +76,7 @@ class TableSetUp(db.Model):
 
 class UsedTables(db.Model):
     id=db.Column(db.Integer, primary_key=True)
-    day=db.Column(db.Date, nullable=False)
-    hour=db.Column(db.Time, nullable=False)
+    date=db.Column(db.Date, nullable=False)
+    time=db.Column(db.Time, nullable=False)
     table_id=db.Column(db.Integer, db.ForeignKey('table.id'))
     table=db.relationship("Table")

@@ -8,10 +8,10 @@ from sqlalchemy import and_, delete
 class UserReservationResource(Resource):
     @jwt_required()
     def post(self):
-        user_id = get_jwt_identity()
+        costumer_id = get_jwt_identity()
         form_data = request.get_json()
         new_reservation = reservation_schema.load(form_data)
-        new_reservation.user_id = user_id
+        new_reservation.costumer_id = costumer_id
         db.session.add(new_reservation)
         db.session.commit()
         return reservation_schema.dump(new_reservation), 201
@@ -126,7 +126,25 @@ class UpdateScheduleResource(Resource):
         return schedule_schema.dump(schedule), 200
 
 # not sure yet how to best proceed with the wait_list so I will add it on later
-
+class WaitListResource(Resource):
+    def get(self):
+        items=Wait_List.query.all()
+        return wait_lists_schema.dump(items), 200
+    
+    def post(self):
+        form_data=request.get_json()
+        new_table=wait_list_schema.load(form_data)
+        db.session.add(new_table)
+        db.session.commit()
+        return wait_list_schema.dump(new_table), 201
+    
+class DeleteWaitListTable(Resource):
+    def delete(self,pk):
+        table=Wait_List.query.get_or_404(pk)
+        db.session.delete(table)
+        db.session.commit()
+        return '', 204
+    
 class GetTableSetUp(Resource):
     def get(self):
         table_set_up=TableSetUp.query.all()

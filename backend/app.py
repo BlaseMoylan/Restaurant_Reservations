@@ -8,7 +8,7 @@ from database.models import db
 from database.schemas import ma
 from resources.auth import LoginResource, RegisterResource
 from resources.cars import AllCarResource, UserCarResource
-from resources.reservations import UserReservationResource,GetTableSetUp,DeleteTableSetUp,GetUsedTables,DeleteUsedTables,UpdateScheduleResource,UserReviewsDeleteResource,AllReservationsDeleteResource,UserReservationDeleteResource,AllReservationsResource,AllReviewsResource,AllTablesResource,UserReviewsResource,SetScheduleResource
+from resources.reservations import UserReservationResource,DeleteWaitListTable,WaitListResource,GetTableSetUp,DeleteTableSetUp,GetUsedTables,DeleteUsedTables,UpdateScheduleResource,UserReviewsDeleteResource,AllReservationsDeleteResource,UserReservationDeleteResource,AllReservationsResource,AllReviewsResource,AllTablesResource,UserReviewsResource,SetScheduleResource
 from dotenv import load_dotenv
 from os import environ
 
@@ -71,6 +71,8 @@ def create_routes():
     api.add_resource(DeleteUsedTables, '/api/delete_used_tables/<int:pk>')
     api.add_resource(GetTableSetUp, '/api/table_set_up')
     api.add_resource(DeleteTableSetUp, '/api/delete_table_set_up/<int:pk>')
+    api.add_resource(WaitListResource, '/api/wait_list')
+    api.add_resource(DeleteWaitListTable, '/api/delete_wait_list_tabel/<int:pk>')
 
 
 

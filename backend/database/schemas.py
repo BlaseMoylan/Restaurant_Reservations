@@ -64,9 +64,8 @@ cars_schema = CarSchema(many=True)
 class TableSchema(ma.Schema):
     id=fields.Integer(primary_key=True)
     party_size=fields.Integer(required=True)
-    is_reserved=fields.Boolean(required=True)
     class Meta:
-        fields=("id","party_size","is_reserved")
+        fields=("id","party_size")
     
     @post_load
     def create_table(self, data, **kwargs):
@@ -95,10 +94,14 @@ reservations_schema = ReservationsSchema(many=True)
 
 class WaitListSchema(ma.Schema):
     id=fields.Integer(primary_key=True)
-    reservation_id=fields.Integer(required=True)
-    reservation=ma.Nested(ReservationsSchema,many=False)
+    time=fields.Time(required=True)
+    date=fields.Date(required=True)
+    costumer_id=fields.Integer(required=True)
+    user = ma.Nested(UserSchema, many=False)
+    table_id=fields.Integer(required=True)
+    table=ma.Nested(TableSchema, many=False)
     class Meta:
-        fields=("id","reservation_id")
+        fields=("id","time","date","costumer_id","table_id")
     @post_load
     def create_wait_list(self, data, **kwargs):
         return Wait_List(**data)
@@ -150,12 +153,12 @@ tables_set_up_schema = TableSetUpSchema(many=True)
 
 class UsedTablesSchema(ma.Schema):
     id=fields.Integer(primary_key=True)
-    day=fields.Date(required=True)
-    hour=fields.Time(required=True)
+    date=fields.Date(required=True)
+    time=fields.Time(required=True)
     table_id=fields.Integer(required=True)
     table=ma.Nested(TableSchema, many=False)
     class Meta:
-            fields=("id","day","hour","table_id")
+            fields=("id","date","time","table_id")
     @post_load
     def create_used_tables(self, data, **kwargs):
         return UsedTables(**data)
