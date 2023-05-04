@@ -9,11 +9,17 @@ class UserReservationResource(Resource):
     @jwt_required()
     def post(self):
         costumer_id = get_jwt_identity()
+        print([costumer_id])
+        print("Pascal")
         form_data = request.get_json()
+        print(form_data)
         new_reservation = reservation_schema.load(form_data)
-        new_reservation.costumer_id = costumer_id
+        print(new_reservation)
+        new_reservation.costumer_id = int(costumer_id)
+        print(new_reservation.costumer_id)
         db.session.add(new_reservation)
         db.session.commit()
+        # return 201
         return reservation_schema.dump(new_reservation), 201
     
     @jwt_required()

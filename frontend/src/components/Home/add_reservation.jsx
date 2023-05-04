@@ -1,4 +1,4 @@
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext";
 
@@ -10,7 +10,7 @@ const AddReservation = () => {
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
   const [table_size, setTableSize] = useState("");
-  const [tableId, setTableId] = useState(0);
+  const [tableId, setTableId] = useState(null);
   const [usedTables, setUsedTables] = useState([]);
   const [allTables, setAllTables] = useState([]);
 
@@ -22,16 +22,8 @@ const AddReservation = () => {
   function handleSubmit(event) {
     event.preventDefault();
     logic();
-    let reservationForm = {
-      time: time,
-      date: date,
-      party_count: +table_size,
-      //   costumer_id: user.id,
-      table_id: tableId,
-    };
-    console.log(reservationForm);
     console.log(tableId);
-    addReservation(reservationForm);
+    // addReservation(reservationForm);
   }
 
   async function addReservation(form) {
@@ -132,6 +124,20 @@ const AddReservation = () => {
       // console.log(tableId)
     }
   }
+
+  useEffect(() => {
+    if(tableId){
+        console.log("useEffect running")
+        let reservationForm = {
+        time: time,
+        date: date,
+        party_count: +table_size,
+        costumer_id: +user.id,
+        table_id: tableId,
+      };
+      addReservation(reservationForm);}
+    console.log("useEffect ran!")
+  }, [tableId]);
 
   return (
     <form onSubmit={handleSubmit}>
