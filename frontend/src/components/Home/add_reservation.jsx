@@ -52,6 +52,7 @@ const AddReservation = () => {
       `http://127.0.0.1:5000/api/used_tables`,
       form
     );
+    getUsedTables()
   }
   async function getAllTables() {
     let results = await axios.get(`http://127.0.0.1:5000/api/all_tables`);
@@ -61,30 +62,79 @@ const AddReservation = () => {
     // get this on the backend side connected to an end point
   }
   function logic() {
-    for (let item of allTables) {
-      //   debugger;
 
-      if (item.party_size == table_size) {
-        for (let used of usedTables) {
-          if (
-            item.id !== used.table_id ||
-            time !== used.time ||
-            date !== used.date
-          ) {
-            let form = {
+    let rightSize = allTables.filter((el)=>{
+      if(table_size == el.party_size){
+        return true
+      }
+    })
+    console.log("Right Size", rightSize)
+    let notAvaiable = usedTables.filter((el)=> el.date==date &&el.time ==time+":00").map((el)=>el.table_id)
+    console.log("Not available", notAvaiable)
+    let avaialble = rightSize.filter((el)=> {
+      if(notAvaiable.includes(el.id)){
+        return false
+      }
+      else{
+        return true
+      }
+    })
+   
+    console.log("Hopfully",avaialble)
+    
+    let form = {
               time: time,
               date: date,
-              table_id: item.id,
+              table_id:avaialble[0].id,
             };
-            setTableId(item.id);
+            setTableId(avaialble[0].id);
             postUsedTable(form);
-            return;
-          } else {
-            // add to waitlist
-          }
-        }
-      }
+    }
 
+    // let id;
+    // let post=null
+    // let count=0
+    // for (let used of usedTables) {
+    //   for (let item of allTables) {
+    //       if ((item.party_size == table_size)&&(used.date==date)&&(allTables[used.table_id-1].party_size==table_size)) {
+    //         console.log(used.table_id)
+    //         console.log(item.id)
+    //         console.log(item.party_size)
+    //         console.log(used.time)
+    //         console.log(time+":00")
+    //         console.log(used.date)
+    //         console.log(date)
+    //         if (
+    //           item.id !== used.table_id ||
+    //           time+":00" !== used.time ||
+    //           date !== used.date
+    //         ) {
+    //           post=true
+    //           id=item.id 
+    //           break
+    //         }
+    //         else{
+    //           post=false
+    //         } 
+    //     }
+    //   }
+    //   if(post==true){
+    //     break
+    //   }
+      
+    // }
+    // if(post==null){
+    //   for(let i of allTables){
+    //     if(i.party_size == table_size){
+    //       id=i.id
+    //       post=true
+    //       break
+    //     }
+    //   }
+    // } 
+    // console.log("it is here")
+    
+    
       //     if(item.party_size==table_size){
       //         console.log('it is here 1')
       //         console.log(usedTables)
@@ -121,9 +171,11 @@ const AddReservation = () => {
       // console.log(id)
       // setTableId(id)
       // console.log("it is here3")
-      // console.log(tableId)
-    }
-  }
+      // console.log(tableId) http://127.0.0.1:5000/api/all_tables`);
+    // let tables = results.data;/api/table_set_up
+    
+  
+
 
   useEffect(() => {
     if(tableId){
