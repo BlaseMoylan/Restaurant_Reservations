@@ -10,8 +10,11 @@ export default class Schedule extends React.Component {
     };
   }
   updateEvents = async () => {
-    let results = await axios.get(`http://127.0.0.1:5000/api/all_reservations`);
-    this.setState({ bookings: results.data.map((item)=> ({title: `booked ${item.time}`,date:item.date})) });
+    let results = await axios.get(`http://127.0.0.1:5000/api/unavailable`)
+    // this.setState({ bookings: results.data.map((item)=> ({title: `unavailable ${item.time} for party size ${item.table_size}`,date:item.date})) });
+    let data=results.data
+    console.log(data)
+    let hours=data.map((item)=>(this.setState({bookings:[...this.state.bookings,{title: `unavailable ${item.time} for size ${item.table_size}`,date:item.date}]})))
   };
   scheduleHours =async()=>{
     let results=await axios.get(`http://127.0.0.1:5000/api/set_schedule`)
@@ -20,8 +23,8 @@ export default class Schedule extends React.Component {
     console.log(this.state.bookings)
   }
   componentDidMount(){
-    this.updateEvents();
     this.scheduleHours();
+    this.updateEvents();
   }
   render() {
     return (

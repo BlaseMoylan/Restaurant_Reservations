@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext";
+import FullCalendar from "@fullcalendar/react";
 
-const AddReservation = () => {
+const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTables,getAllTables,getUsedTables}) => {
   // const [addReservation, setAddReservation]=useState([])
   // turn this into a custom useState when there is time
 
@@ -11,8 +12,9 @@ const AddReservation = () => {
   const [date, setDate] = useState("");
   const [table_size, setTableSize] = useState("");
   const [tableId, setTableId] = useState(null);
-  const [usedTables, setUsedTables] = useState([]);
-  const [allTables, setAllTables] = useState([]);
+  const [unavailable,setUnavailable]=useState([])
+  // const [usedTables, setUsedTables] = useState([]);
+  // const [allTables, setAllTables] = useState([]);
 
   useEffect(() => {
     getUsedTables();
@@ -23,30 +25,28 @@ const AddReservation = () => {
     event.preventDefault();
     logic();
     console.log(tableId);
-    // addReservation(reservationForm);
   }
 
   async function addReservation(form) {
     try {
-      let results = await axios.post(
-        `http://127.0.0.1:5000/api/user_reservations`,
-        form,
+      let results = await axios.post(`http://127.0.0.1:5000/api/user_reservations`,form,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+      getReservations()
     } catch (ex) {
       console.log("error in put");
     }
   }
-  async function getUsedTables() {
-    let results = await axios.get(`http://127.0.0.1:5000/api/used_tables`);
-    console.log("this is it");
-    console.log(results.data);
-    setUsedTables(results.data);
-  }
+  // async function getUsedTables() {
+  //   let results = await axios.get(`http://127.0.0.1:5000/api/used_tables`);
+  //   console.log("this is it");
+  //   console.log(results.data);
+  //   setUsedTables(results.data);
+  // }
   async function postUsedTable(form) {
     let results = await axios.post(
       `http://127.0.0.1:5000/api/used_tables`,
@@ -54,15 +54,133 @@ const AddReservation = () => {
     );
     getUsedTables()
   }
-  async function getAllTables() {
-    let results = await axios.get(`http://127.0.0.1:5000/api/all_tables`);
-    let tables = results.data;
-    console.log(tables);
-    setAllTables(tables);
-    // get this on the backend side connected to an end point
+  // async function getAllTables() {
+  //   let results = await axios.get(`http://127.0.0.1:5000/api/all_tables`);
+  //   let tables = results.data;
+  //   console.log(tables);
+  //   setAllTables(tables);
+  //   // get this on the backend side connected to an end point
+  // }
+  async function getUnavailable(){
+    let results= await axios.get(`http://127.0.0.1:5000/api/unavailable`)
+    setUnavailable(results.data)
   }
-  function logic() {
+  async function postUnavailable(form){
+    let results= await axios.post(`http://127.0.0.1:5000/api/unavailable`,form)
+  }
 
+  async function postWaitList(form){
+    let results= await axios.post(`http://127.0.0.1:5000/api/wait_list`,form)
+    getWaitList()
+  }
+  // async function deleteWaitList(pk){
+  //   let results=await axios.delete(`http://127.0.0.1:5000/api/delete_wait_list_tabel/${pk}`)
+  //   getWaitList()
+  // }
+
+  // async function getWaitList(){
+  //   let results= await axios.get(`http://127.0.0.1:5000/api/wait_list`)
+  //   let count=1
+  //   for(let item of results.data){
+  //     if(item.costumer_id==user.id){
+  //       break
+  //     }
+  //     else{
+  //       count++
+  //     }
+  //   }
+  //   alert(`Your position in the wait list is ${count}`)
+  // }
+  function validatedPrompt(message, acceptableAnswers) {
+    acceptableAnswers = acceptableAnswers.map(aa => {
+        if(typeof aa == "string"){
+            return aa.toLowerCase()
+        }
+        else{
+            return aa
+        }
+    });
+    const builtPromptWithAcceptableAnswers = `${message} \nAcceptable Answers: ${acceptableAnswers.map(aa => `\n-> ${aa}`).join('')}`;
+
+    const userResponse = prompt(builtPromptWithAcceptableAnswers).toLowerCase();
+    let selectedAnswer = acceptableAnswers.filter(aa => userResponse == aa)
+
+    if (selectedAnswer.length == 1) {
+        return selectedAnswer[0];
+    }
+    else{
+        alert(`"${userResponse}" is not an acceptable response. The acceptable responses include:\n${acceptableAnswers.map(aa => `\n-> ${aa}`).join('')} \n\nPlease try again.`);
+        return validatedPrompt(message, acceptableAnswers);
+    }
+  }
+  function waitListRequest(){
+    const userInput= validatedPrompt(
+      'This booking is filled, do you wish to be put on a wait list?',['yes','no']
+    );
+    switch(userInput){
+      case 'yes':
+        let form={
+          time: time,
+          date: date,
+          table_size: +table_size,
+          costumer_id: +user.id
+        }
+        postWaitList(form)
+        getWaitList()
+        let count=1
+        for(let item of waitList){
+          if(item.costumer_id==user.id){
+            break
+          }
+          else{
+            count++
+          }
+        }
+        alert(`Your position in the wait list is ${count}`)
+        break
+      case 'no':
+        break
+      default:
+        alert('Invalid input. Please try again.');
+    }
+  }
+  // function addReservationFromWaitList(){
+    
+  //   console.log("fired")
+  //   waitList.map((item)=>{{
+  //     let rightSize = allTables.filter((el)=>{
+  //       if(item.table_size == el.party_size){
+  //         return true
+  //       }
+  //     })
+  //     console.log("Right Size", rightSize)
+  //     let notAvaiable = usedTables.filter((el)=> el.date==item.date &&el.time ==item.time).map((el)=>el.table_id)
+  //     console.log("Not available", notAvaiable)
+  //     let avaialble = rightSize.filter((el)=> {
+  //       if(notAvaiable.includes(el.id)){
+  //         return false
+  //       }
+  //       else{
+  //         return true
+  //       }
+  //     })
+  //     console.log(avaialble)
+  //     if(avaialble.length>0){
+  //       let form = {
+  //         time: item.time,
+  //         date: item.date,
+  //         table_id:avaialble[0].id,
+  //       };
+  //       setTableId(avaialble[0].id);
+  //       postUsedTable(form);
+  //       console.log(item.id)
+  //       deleteWaitList(item.id)
+  //     }
+  //   }})
+  // }
+  // addReservationFromWaitList()
+  function logic() {
+    getUnavailable()
     let rightSize = allTables.filter((el)=>{
       if(table_size == el.party_size){
         return true
@@ -81,102 +199,30 @@ const AddReservation = () => {
     })
    
     console.log("Hopfully",avaialble)
-    
-    let form = {
-              time: time,
-              date: date,
-              table_id:avaialble[0].id,
-            };
-            setTableId(avaialble[0].id);
-            postUsedTable(form);
+    if(avaialble.length==0){
+      let form={
+        time:time,
+        date:date,
+        table_size:table_size
+      }
+      for(let item of unavailable){
+        if((item.time==time)&&(item.date==date)&&(item.table_size==table_size)){
+          postUnavailable(form)
+        }
+      }
+      waitListRequest()
     }
-
-    // let id;
-    // let post=null
-    // let count=0
-    // for (let used of usedTables) {
-    //   for (let item of allTables) {
-    //       if ((item.party_size == table_size)&&(used.date==date)&&(allTables[used.table_id-1].party_size==table_size)) {
-    //         console.log(used.table_id)
-    //         console.log(item.id)
-    //         console.log(item.party_size)
-    //         console.log(used.time)
-    //         console.log(time+":00")
-    //         console.log(used.date)
-    //         console.log(date)
-    //         if (
-    //           item.id !== used.table_id ||
-    //           time+":00" !== used.time ||
-    //           date !== used.date
-    //         ) {
-    //           post=true
-    //           id=item.id 
-    //           break
-    //         }
-    //         else{
-    //           post=false
-    //         } 
-    //     }
-    //   }
-    //   if(post==true){
-    //     break
-    //   }
-      
-    // }
-    // if(post==null){
-    //   for(let i of allTables){
-    //     if(i.party_size == table_size){
-    //       id=i.id
-    //       post=true
-    //       break
-    //     }
-    //   }
-    // } 
-    // console.log("it is here")
+    else{
+      let form = {
+        time: time,
+        date: date,
+        table_id:avaialble[0].id,
+      };
+      setTableId(avaialble[0].id);
+      postUsedTable(form);
+}
+    }
     
-    
-      //     if(item.party_size==table_size){
-      //         console.log('it is here 1')
-      //         console.log(usedTables)
-      //         if(usedTables.length>0){
-      //             console.log('it is here 1.5')
-      //             let used=usedTables.filter((used)=>{
-      //                 console.log('it is here 17')
-      //                 if(item.id!==used.table_id || time!==used.time || date!==used.date){
-      //                     id=item.id
-      //                     console.log(item)
-      //                     console.log('it is here 2')
-      //                     // setTableId(item.id)
-      //                     let form={
-      //                         time:time,
-      //                         date:date,
-      //                         table_id:item.id
-      //                     }
-      //                     postUsedTable(form)
-      //                     return true
-      //                 }
-      //         })}
-      //         else{
-      //             id=item.id
-      //             console.log("else 1")
-      //             let form={
-      //                 time:time,
-      //                 date:date,
-      //                 table_id:item.id
-      //             }
-      //             postUsedTable(form)
-      //         }
-      //         }
-      //     })
-      // console.log(id)
-      // setTableId(id)
-      // console.log("it is here3")
-      // console.log(tableId) http://127.0.0.1:5000/api/all_tables`);
-    // let tables = results.data;/api/table_set_up
-    
-  
-
-
   useEffect(() => {
     if(tableId){
         console.log("useEffect running")

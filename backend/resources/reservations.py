@@ -1,8 +1,8 @@
 from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, Reviews,Schedule,Table,Reservations,Wait_List,UsedTables,TableSetUp
-from database.schemas import review_schema,table_set_up_schema,tables_set_up_schema,used_table_schema,used_tables_schema,reviews_schema,schedule_schema,schedules_schema,wait_list_schema,wait_lists_schema,reservation_schema,reservations_schema,table_schema,tables_schema
+from database.models import db, Reviews,Schedule,Table,Unavailable,Reservations,Wait_List,UsedTables,TableSetUp
+from database.schemas import review_schema,unavailable_schema,unavailable_schemas,table_set_up_schema,tables_set_up_schema,used_table_schema,used_tables_schema,reviews_schema,schedule_schema,schedules_schema,wait_list_schema,wait_lists_schema,reservation_schema,reservations_schema,table_schema,tables_schema
 from sqlalchemy import and_, delete
 
 class UserReservationResource(Resource):
@@ -35,7 +35,7 @@ class UserReservationDeleteResource(Resource):
         user_id = get_jwt_identity()
         stmt=(
             delete(Reservations).
-            where(and_(Reservations.id==pk,Reservations.custumer_id==user_id))
+            where(and_(Reservations.id==pk,Reservations.costumer_id==user_id))
         )
         db.session.execute(stmt)
         db.session.commit()
@@ -184,7 +184,26 @@ class GetUsedTables(Resource):
 
 class DeleteUsedTables(Resource):
     def delete(self,pk):
-        table=TableSetUp.query.get_or_404(pk)
+        table=UsedTables.query.get_or_404(pk)
+        db.session.delete(table)
+        db.session.commit()
+        return '', 204
+
+class UnavailableResource(Resource):
+    def get(self):
+        table=Unavailable.query.all()
+        return unavailable_schemas.dump(table), 200
+    
+    def post(self):
+        form_data=request.get_json()
+        new_table=unavailable_schema.load(form_data)
+        db.session.add(new_table)
+        db.session.commit()
+        return unavailable_schema.dump(new_table), 201
+
+class DeleteUnavailableResource(Resource):
+    def delete(self,pk):
+        table=Unavailable.query.get_or_404(pk)
         db.session.delete(table)
         db.session.commit()
         return '', 204

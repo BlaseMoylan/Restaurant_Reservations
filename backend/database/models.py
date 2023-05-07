@@ -50,8 +50,7 @@ class Wait_List(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     time=db.Column(db.Time, nullable=False)
     date=db.Column(db.Date, nullable=False)
-    table_id=db.Column(db.Integer, db.ForeignKey('table.id'))
-    table=db.relationship("Table")
+    table_size=db.Column(db.Integer,nullable=False)
     costumer_id=db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship("User")
 
@@ -80,3 +79,9 @@ class UsedTables(db.Model):
     time=db.Column(db.Time, nullable=False)
     table_id=db.Column(db.Integer, db.ForeignKey('table.id'))
     table=db.relationship("Table")
+
+class Unavailable(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    date=db.Column(db.Date, nullable=False)
+    time=db.Column(db.Time, nullable=False)
+    table_size=db.Column(db.Integer,nullable=False)

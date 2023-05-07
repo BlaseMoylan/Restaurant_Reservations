@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Car, Table, Reservations,Wait_List,Reviews,Schedule,TableSetUp,UsedTables
+from database.models import User, Car, Table,Unavailable, Reservations,Wait_List,Reviews,Schedule,TableSetUp,UsedTables
 
 ma = Marshmallow()
 
@@ -98,10 +98,9 @@ class WaitListSchema(ma.Schema):
     date=fields.Date(required=True)
     costumer_id=fields.Integer(required=True)
     user = ma.Nested(UserSchema, many=False)
-    table_id=fields.Integer(required=True)
-    table=ma.Nested(TableSchema, many=False)
+    table_size=fields.Integer(required=True)
     class Meta:
-        fields=("id","time","date","costumer_id","table_id")
+        fields=("id","time","date","costumer_id","table_size")
     @post_load
     def create_wait_list(self, data, **kwargs):
         return Wait_List(**data)
@@ -165,3 +164,17 @@ class UsedTablesSchema(ma.Schema):
 
 used_table_schema = UsedTablesSchema()
 used_tables_schema = UsedTablesSchema(many=True)
+
+class UnavailableSchema(ma.Schema):
+    id=fields.Integer(primary_key=True)
+    date=fields.Date(required=True)
+    time=fields.Time(required=True)
+    table_size=fields.Integer(required=True)
+    class Meta:
+        fields=("id","date","time","table_size")
+    @post_load
+    def create_unavailable(self,data,**kwargs):
+        return Unavailable(**data)
+
+unavailable_schema=UnavailableSchema()
+unavailable_schemas=UnavailableSchema(many=True)
