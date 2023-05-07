@@ -6,9 +6,12 @@ import SetTable from "../../components/Admin/SetTable";
 import axios from "axios";
 import { UNSAFE_RouteContext } from "react-router-dom";
 const AdminPage = () => {
+    
     const [user, token] = useAuth();
     const auth= "Bearer " + token
     console.log(auth)
+    
+    
     return ( 
         <main>
             <Schedule user={user} auth={auth}/>
