@@ -112,10 +112,11 @@ class ReviewsSchema(ma.Schema):
     id=fields.Integer(primary_key=True)
     review_text=fields.String(required=True)
     rating=fields.Integer(required=True)
+    user_name=fields.String(required=True)
     costumer_id=fields.Integer()
     user = ma.Nested(UserSchema, many=False)
     class Meta:
-        fields=("id","review_text","rating","costumer_id")
+        fields=("id","review_text","rating","user_name","costumer_id")
     @post_load
     def create_review(self, data, **kwargs):
         return Reviews(**data)

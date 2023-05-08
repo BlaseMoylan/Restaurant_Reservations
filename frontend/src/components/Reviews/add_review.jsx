@@ -26,6 +26,7 @@ const AddReviews = ({getAllReviews,allReviews}) => {
         let form={
             review_text:AddReview,
             rating:addRating,
+            user_name:user.username
             // customer_id:+user.id
         }
         makeReview(form)

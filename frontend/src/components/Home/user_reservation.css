@@ -1,0 +1,30 @@
+.Table{
+    width:2225px;
+    border:none;
+    margin-left: 250px;
+    
+}
+.titles{
+    font-size: x-large;
+    font-weight: 300;
+    color: white;
+    /* background-color: black;
+    border-color: black; */
+}
+.data{
+   
+    font-size: large;
+    font-weight: 400;
+    color: white;
+    /* background-color: black;
+    border:none;  */
+}
+.delete{
+    border:none;
+    background-color: transparent;
+    font-size:medium;
+    color: white;
+}
+.delete:hover{
+    color:rgb(48, 47, 47);
+}

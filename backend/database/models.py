@@ -60,6 +60,7 @@ class Reviews(db.Model):
     review_text=db.Column(db.Text, nullable=False)
     rating=db.Column(db.Integer, nullable=False)
     customer_id=db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_name=db.Column(db.String(255),nullable=False)
     user = db.relationship("User")
 
 class Schedule(db.Model):

@@ -53,7 +53,7 @@ const HomePage = () => {
     getAllTables()
   }, []);
   if(user.is_admin!==true){
-    if(waitList||reservations){
+    if(waitList||reservations||usedTables){
       return (
         <main>
           <h1>Welcome!</h1>

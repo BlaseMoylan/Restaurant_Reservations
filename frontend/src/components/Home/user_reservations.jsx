@@ -120,9 +120,9 @@ const UserReservations = ({waitList,reservations,getReservations,getWaitList,use
     }
     function userReservations(){
         return (  
-            <table>
+            <table className='Table'>
                 <thead>
-                    <tr>
+                    <tr className='titles'>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Table Size</th>
@@ -133,7 +133,7 @@ const UserReservations = ({waitList,reservations,getReservations,getWaitList,use
                         
                         if(user.id==res.costumer_id){
                             return(
-                                <tr>
+                                <tr className='data'>
                                     <td>{res.date}</td>
                                     <td>{res.time}</td>
                                     <td>{res.party_count}</td>

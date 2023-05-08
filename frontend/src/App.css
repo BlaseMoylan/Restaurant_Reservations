@@ -16,11 +16,45 @@ html {
 p {
   font-size: 20px;
 }
+.app-background{
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background-image: linear-gradient(to right, #737373, #400000);
+}
 
+main{
+  
+  min-height: 100vh;
+}
+/* :root{
+  --dark-background-color: hsla(0, 0%, 0%, 0.5);
+  --nav-background-color: rgba(255, 255, 255, 0.10);
+
+  /* text variables */
+  /* --text-light-color: white;
+  --text-off-color: rgb(160, 160, 160);
+
+  --xsm-text: 1.4rem;
+  --sm-text: 1.8rem;
+  --m-text: 2rem;
+  --lg-text: 2.4rem;
+  --xlg-text: 3.2rem; */
+
+  /* border variables */
+  /* --main-border-decoration: solid;
+  --main-border-color: white;
+
+  --sm-border-width: 1px;
+  --med-border-width: 2px;
+
+  --border-effect: var(--main-border-decoration) var(--sm-border-width) var(--main-border-color);
+} */ 
 button {
   background-color: transparent;
-  border: 2px solid steelblue;
-  color: steelblue;
+  border: 2px solid rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+
   font-size: 1rem;
   font-family: inherit;
   max-width: 100px;
@@ -56,4 +90,25 @@ button:hover {
   padding: 3px 7px;
   font-size: 17px;
 }
+table{
+  width:100vw;
+  padding: 1%;
+    border:none;
+    /* margin-left: 5%; */
+    margin-bottom: 5vw;
+    margin-top: 5vw;
+}
+thead{
+  font-size: x-large;
+    font-weight: 300;
+    color: rgb(14, 21, 46);
+}
+tbody{
+  font-size: large;
+    font-weight: 400;
+    color: rgb(255, 255, 255);
+}
 /* this is the calendar */
+form{
+  padding: 30px;
+}
