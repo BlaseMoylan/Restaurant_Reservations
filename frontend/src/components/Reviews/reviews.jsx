@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import "./reviews.css"
 const Reviews = ({allReviews,yourReviews,getAllReviews,deleteYourReview,getYourReviews}) => {
     // function reviews(){
         
@@ -35,25 +36,27 @@ const Reviews = ({allReviews,yourReviews,getAllReviews,deleteYourReview,getYourR
     // }
     return ( 
         <section>
-            
+                <div className='head'>See What our Costumers have to say!</div>
             {allReviews.map((review)=>
-                <div>
-                    <p>{review.user_name}</p>
-                    <p>{review.review_text}</p>
-                    <p>{review.rating}</p>
+                <div className='display'>
+                    <p className='text'>{review.user_name}</p>
+                    <p className='text'>{review.review_text}</p>
+                    <p className='text'>{review.rating}</p>
 
                 </div>
             )}
             
             
             {/* {console.log(yourReviews)} */}
+            <div className='title'>Your Reviews</div>
             {yourReviews.map((yourReview)=>
-                    <div>
+                    <div className='display'>
                         
                         {console.log(yourReview)}
-                        <p>{yourReview.user_name}</p>
-                        <p>{yourReview.review_text}</p>
-                        <p>{yourReview.rating}</p>
+                        
+                        <p className='text'>{yourReview.user_name}</p>
+                        <p className='text'>{yourReview.review_text}</p>
+                        <p className='text'>{yourReview.rating}</p>
                         <div><button onClick={()=>{deleteYourReview(yourReview.id)}}>Remove</button></div>
                     </div>
                 )}

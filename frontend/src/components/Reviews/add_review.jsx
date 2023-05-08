@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import AuthContext from "../../context/AuthContext";
 import axios from 'axios';
 import FullCalendar from '@fullcalendar/react';
+import "./reviews.css"
 const AddReviews = ({getAllReviews,allReviews}) => {
     const { user, token } = useContext(AuthContext);
     const [AddReview,setAddReview]=useState([])
@@ -33,10 +34,11 @@ const AddReviews = ({getAllReviews,allReviews}) => {
     }
 
     return ( 
-        <form onSubmit={handleSubmit}>
-            <label>Rating</label>
-            <input type="integer" value={addRating} onChange={(event)=>setAddRating(event.target.value)} />
-            <input type="text" value={AddReview} onChange={(event)=>setAddReview(event.target.value)}/>
+        <form onSubmit={handleSubmit}className='submit'>
+            <label className='rate'>Rating</label>
+            <input className='inputbox1' type="integer" value={addRating} onChange={(event)=>setAddRating(event.target.value)} />
+            <label className='rate'>Write Review</label>
+            <input className='inputbox' type="text" value={AddReview} onChange={(event)=>setAddReview(event.target.value)}/>
             <button type='submit' className="btn btn-primary">Add Review</button>
         </form>
     );
