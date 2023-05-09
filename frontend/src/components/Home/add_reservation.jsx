@@ -67,6 +67,7 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
   }
   async function postUnavailable(form){
     let results= await axios.post(`http://127.0.0.1:5000/api/unavailable`,form)
+    getUnavailable()
   }
 
   async function postWaitList(form){
@@ -102,7 +103,7 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
     });
     const builtPromptWithAcceptableAnswers = `${message} \nAcceptable Answers: ${acceptableAnswers.map(aa => `\n-> ${aa}`).join('')}`;
 
-    const userResponse = prompt(builtPromptWithAcceptableAnswers).toLowerCase();
+    const userResponse = prompt(builtPromptWithAcceptableAnswers);
     let selectedAnswer = acceptableAnswers.filter(aa => userResponse == aa)
 
     if (selectedAnswer.length == 1) {
@@ -181,6 +182,8 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
   // addReservationFromWaitList()
   function logic() {
     getUnavailable()
+    getAllTables()
+    console.log(allTables)
     let rightSize = allTables.filter((el)=>{
       if(table_size == el.party_size){
         return true
@@ -205,7 +208,7 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
         date:date,
         table_size:table_size
       }
-      for(let item of unavailable){
+      for(let item of notAvaiable){
         if((item.time==time)&&(item.date==date)&&(item.table_size==table_size)){
           postUnavailable(form)
         }

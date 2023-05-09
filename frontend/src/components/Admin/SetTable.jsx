@@ -57,6 +57,7 @@ const SetTable = ({user,auth}) => {
         let results=await axios.post(`http://127.0.0.1:5000/api/table_set_up`,form)
         getTableSetUp()
         postTables(form)
+        
         // }
     }
 
@@ -66,7 +67,7 @@ const SetTable = ({user,auth}) => {
 
     async function postTables(form){
         for(let i=0;i<form.num_of_tables;i++){
-            let data={party_size:form.table_size,is_reserved:false}
+            let data={party_size:form.table_size}
             let results= await axios.post(`http://127.0.0.1:5000/api/all_tables`,data)
         }
     }

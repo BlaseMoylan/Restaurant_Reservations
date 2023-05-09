@@ -20,7 +20,7 @@ p {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-image: linear-gradient(to right, #737373, #400000);
+  background-image: linear-gradient(to right, #737373, #2d0e36);
 }
 
 main{
