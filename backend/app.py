@@ -4,8 +4,8 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from flask_migrate import Migrate
-from database.models import db
-from database.schemas import ma
+from datalogic.models import db
+from datalogic.schemas import ma
 from resources.auth import LoginResource, RegisterResource
 from resources.cars import AllCarResource, UserCarResource
 from resources.reservations import UserReservationResource,UnavailableResource,DeleteUnavailableResource,DeleteWaitListTable,WaitListResource,GetTableSetUp,DeleteTableSetUp,GetUsedTables,DeleteUsedTables,UpdateScheduleResource,UserReviewsDeleteResource,AllReservationsDeleteResource,UserReservationDeleteResource,AllReservationsResource,AllReviewsResource,AllTablesResource,UserReviewsResource,SetScheduleResource
