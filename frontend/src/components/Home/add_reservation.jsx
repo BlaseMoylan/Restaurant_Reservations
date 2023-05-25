@@ -17,6 +17,7 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
   // const [allTables, setAllTables] = useState([]);
 
   useEffect(() => {
+    getUnavailable();
     getUsedTables();
     getAllTables();
   }, []);
@@ -189,6 +190,9 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
         return true
       }
     })
+    // the problem is here!
+    console.log("!!!!!!!!!!!!!!!!")
+    console.log(rightSize)
     console.log("Right Size", rightSize)
     let notAvaiable = usedTables.filter((el)=> el.date==date &&el.time ==time+":00").map((el)=>el.table_id)
     console.log("Not available", notAvaiable)
@@ -208,12 +212,22 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
         date:date,
         table_size:table_size
       }
-      for(let item of notAvaiable){
-        if((item.time==time)&&(item.date==date)&&(item.table_size==table_size)){
-          postUnavailable(form)
-        }
+      // need to instead search through unavailable and if it is not already in there then add it else go to the wait list
+      // need to figure out how to triger the logic in user reservations to fire 
+      if(unavailable.length==0){
+        postUnavailable(form)
+        waitListRequest()
       }
-      waitListRequest()
+      else{
+        for(let item of unavailable){
+          if((item.time==time)&&(item.date==date)&&(item.table_size==table_size)){
+            waitListRequest()
+            break
+          }
+          else{postUnavailable(form)}
+        }
+        waitListRequest()
+      }
     }
     else{
       let form = {

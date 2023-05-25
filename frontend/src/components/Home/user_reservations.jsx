@@ -75,7 +75,7 @@ const UserReservations = ({waitList,reservations,getReservations,getWaitList,use
             }
           })
           console.log("Right Size", rightSize)
-          let notAvaiable = usedTables.filter((el)=> el.date==item.date &&el.time ==item.time).map((el)=>el.table_id)
+          let notAvaiable = usedTables.filter((el)=> el.date==item.date && el.time ==item.time).map((el)=>el.table_id)
           console.log("Not available", notAvaiable)
           let avaialble = rightSize.filter((el)=> {
             if(notAvaiable.includes(el.id)){
