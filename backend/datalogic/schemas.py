@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Car, Table,Unavailable, Reservations,Wait_List,Reviews,Schedule,TableSetUp,UsedTables
+from datalogic.models import User, Car, Table,Unavailable, Reservations,Wait_List,Reviews,Schedule,TableSetUp,UsedTables
 
 ma = Marshmallow()
 

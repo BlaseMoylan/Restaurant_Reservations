@@ -1,8 +1,8 @@
 from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, Reviews,Schedule,Table,Unavailable,Reservations,Wait_List,UsedTables,TableSetUp
-from database.schemas import review_schema,unavailable_schema,unavailable_schemas,table_set_up_schema,tables_set_up_schema,used_table_schema,used_tables_schema,reviews_schema,schedule_schema,schedules_schema,wait_list_schema,wait_lists_schema,reservation_schema,reservations_schema,table_schema,tables_schema
+from datalogic.models import db, Reviews,Schedule,Table,Unavailable,Reservations,Wait_List,UsedTables,TableSetUp
+from datalogic.schemas import review_schema,unavailable_schema,unavailable_schemas,table_set_up_schema,tables_set_up_schema,used_table_schema,used_tables_schema,reviews_schema,schedule_schema,schedules_schema,wait_list_schema,wait_lists_schema,reservation_schema,reservations_schema,table_schema,tables_schema
 from sqlalchemy import and_, delete
 
 class UserReservationResource(Resource):

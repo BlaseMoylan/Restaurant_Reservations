@@ -14,6 +14,7 @@ const UserReservations = ({waitList,reservations,getReservations,getWaitList,use
         
     // }
     const { user, token } = useContext(AuthContext);
+    const IP="35.87.21.157"
     // const [usedTables,setUsedTables]=useState([])
     // async function getUsedTables(){
     //     let results=await axios.get(`http://127.0.0.1:5000/api/used_tables`)
@@ -26,16 +27,16 @@ const UserReservations = ({waitList,reservations,getReservations,getWaitList,use
         getReservations()
       }, []);
     async function deleteWaitList(pk){
-        let results= await axios.delete(`http://127.0.0.1:5000/api/delete_wait_list_tabel/${pk}`)
+        let results= await axios.delete(`http://${IP}:5000/api/delete_wait_list_tabel/${pk}`)
         // getWaitList()
       }
     async function deleteUsedTable(pk){
-        let results= await axios.delete(`http://127.0.0.1:5000/api/delete_used_tables/${pk}`)
+        let results= await axios.delete(`http://${IP}:5000/api/delete_used_tables/${pk}`)
         getUsedTables()
         
     }
     async function deleteReservation(pk){
-    let results= await axios.delete(`http://127.0.0.1:5000/api/user_delete_reservation/${pk}`,
+    let results= await axios.delete(`http://${IP}:5000/api/user_delete_reservation/${pk}`,
     {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,7 +46,7 @@ const UserReservations = ({waitList,reservations,getReservations,getWaitList,use
     }
     async function addReservation(form) {
         try {
-          let results = await axios.post(`http://127.0.0.1:5000/api/user_reservations`,form,
+          let results = await axios.post(`http://${IP}:5000/api/user_reservations`,form,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -59,7 +60,7 @@ const UserReservations = ({waitList,reservations,getReservations,getWaitList,use
       }
       async function postUsedTable(form) {
         let results = await axios.post(
-          `http://127.0.0.1:5000/api/used_tables`,
+          `http://${IP}:5000/api/used_tables`,
           form
         );
         getUsedTables()

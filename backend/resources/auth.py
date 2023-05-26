@@ -1,8 +1,8 @@
 from flask import request
 from flask_jwt_extended import create_access_token
 from flask_restful import Resource
-from database.models import db, User
-from database.schemas import register_schema, user_schema
+from datalogic.models import db, User
+from datalogic.schemas import register_schema, user_schema
 from marshmallow import ValidationError
 import datetime
 

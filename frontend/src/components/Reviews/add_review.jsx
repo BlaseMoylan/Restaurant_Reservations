@@ -7,9 +7,10 @@ const AddReviews = ({getAllReviews,allReviews}) => {
     const { user, token } = useContext(AuthContext);
     const [AddReview,setAddReview]=useState([])
     const [addRating,setAddRating]=useState(0)
+    const IP="35.87.21.157"
     async function makeReview(form){
     try{
-        let results= await axios.post(`http://127.0.0.1:5000/api/user_reviews`,form,
+        let results= await axios.post(`http://${IP}:5000/api/user_reviews`,form,
         {
           headers: {
             Authorization: `Bearer ${token}`,

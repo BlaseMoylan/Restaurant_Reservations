@@ -8,13 +8,13 @@ const ReviewsPage = (props) => {
     const { user, token } = useContext(AuthContext);
     const [allReviews,setAllReviews]=useState([])
     const [yourReviews,setYourReviews]=useState([])
-
+    const IP="35.87.21.157"
     async function getAllReviews(){
-        let results=await axios.get(`http://127.0.0.1:5000/api/all_reviews`)
+        let results=await axios.get(`http://${IP}:5000/api/all_reviews`)
         setAllReviews(results.data)
     }
     async function getYourReviews(){
-        let results= await axios.get(`http://127.0.0.1:5000/api/user_reviews`,
+        let results= await axios.get(`http://${IP}:5000/api/user_reviews`,
         {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -24,7 +24,7 @@ const ReviewsPage = (props) => {
     }
 
     async function deleteYourReview(pk){
-        let results= await axios.delete(`http://127.0.0.1:5000/api/user_delete_reviews/${pk}`,
+        let results= await axios.delete(`http://${IP}:5000/api/user_delete_reviews/${pk}`,
         {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -19,27 +19,27 @@ const HomePage = () => {
   const auth= "Bearer " + token
   console.log(auth)
   console.log(user)
-
+  const IP="35.87.21.157"
   async function getWaitList(){
-    let results= await axios.get(`http://127.0.0.1:5000/api/wait_list`)
+    let results= await axios.get(`http://${IP}:5000/api/wait_list`)
     setWaitList(results.data)
   }
 
   async function getReservations(){
-    let results= await axios.get(`http://127.0.0.1:5000/api/all_reservations`)
+    let results= await axios.get(`http://${IP}:5000/api/all_reservations`)
     setReservations(results.data)
     
   }
 
   async function getUsedTables() {
-    let results = await axios.get(`http://127.0.0.1:5000/api/used_tables`);
+    let results = await axios.get(`http://${IP}:5000/api/used_tables`);
     console.log("this is it");
     console.log(results.data);
     setUsedTables(results.data);
   }
 
   async function getAllTables() {
-    let results = await axios.get(`http://127.0.0.1:5000/api/all_tables`);
+    let results = await axios.get(`http://${IP}:5000/api/all_tables`);
     let tables = results.data;
     console.log(tables);
     setAllTables(tables);

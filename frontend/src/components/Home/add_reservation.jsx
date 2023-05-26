@@ -30,7 +30,7 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
 
   async function addReservation(form) {
     try {
-      let results = await axios.post(`http://127.0.0.1:5000/api/user_reservations`,form,
+      let results = await axios.post(`http://35.87.21.157:5000/api/user_reservations`,form,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
   // }
   async function postUsedTable(form) {
     let results = await axios.post(
-      `http://127.0.0.1:5000/api/used_tables`,
+      `http://35.87.21.157:5000/api/used_tables`,
       form
     );
     getUsedTables()
@@ -63,16 +63,16 @@ const AddReservation = ({getWaitList,waitList,getReservations,usedTables,allTabl
   //   // get this on the backend side connected to an end point
   // }
   async function getUnavailable(){
-    let results= await axios.get(`http://127.0.0.1:5000/api/unavailable`)
+    let results= await axios.get(`http://35.87.21.157:5000/api/unavailable`)
     setUnavailable(results.data)
   }
   async function postUnavailable(form){
-    let results= await axios.post(`http://127.0.0.1:5000/api/unavailable`,form)
+    let results= await axios.post(`http://35.87.21.157:5000/api/unavailable`,form)
     getUnavailable()
   }
 
   async function postWaitList(form){
-    let results= await axios.post(`http://127.0.0.1:5000/api/wait_list`,form)
+    let results= await axios.post(`http://35.87.21.157:5000/api/wait_list`,form)
     getWaitList()
   }
   // async function deleteWaitList(pk){
