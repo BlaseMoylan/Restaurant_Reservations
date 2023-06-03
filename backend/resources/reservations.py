@@ -131,7 +131,7 @@ class UpdateScheduleResource(Resource):
         db.session.commit()
         return schedule_schema.dump(schedule), 200
 
-# not sure yet how to best proceed with the wait_list so I will add it on later
+
 class WaitListResource(Resource):
     def get(self):
         items=Wait_List.query.all()

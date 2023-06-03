@@ -10,7 +10,7 @@ const AddReviews = ({getAllReviews,allReviews}) => {
     const IP="35.87.21.157"
     async function makeReview(form){
     try{
-        let results= await axios.post(`http://${IP}:5000/api/user_reviews`,form,
+        let results= await axios.post(`http://${IP}:8000/api/user_reviews`,form,
         {
           headers: {
             Authorization: `Bearer ${token}`,

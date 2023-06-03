@@ -40,8 +40,6 @@ register_schema = RegisterSchema()
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
-
-# Car Schemas
 class CarSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     make = fields.String(required=True)
@@ -59,8 +57,6 @@ class CarSchema(ma.Schema):
 car_schema = CarSchema()
 cars_schema = CarSchema(many=True)
 
-
-# TODO: Add your schemas below
 class TableSchema(ma.Schema):
     id=fields.Integer(primary_key=True)
     party_size=fields.Integer(required=True)

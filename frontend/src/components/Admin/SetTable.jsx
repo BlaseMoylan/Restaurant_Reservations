@@ -10,7 +10,7 @@ const SetTable = ({user,auth}) => {
 
     // will need a useEffect to get it to show on first run through
     async function getTableSetUp(){
-        let results=await axios.get('http://35.87.21.157:5000/api/table_set_up')
+        let results=await axios.get('http://35.87.21.157:8000/api/table_set_up')
         setTableSetUp(results.data)
     }
     useEffect(() => {
@@ -54,7 +54,7 @@ const SetTable = ({user,auth}) => {
         //     }
         // }
         // else{
-        let results=await axios.post(`http://35.87.21.157:5000/api/table_set_up`,form)
+        let results=await axios.post(`http://35.87.21.157:8000/api/table_set_up`,form)
         getTableSetUp()
         postTables(form)
         
@@ -62,13 +62,13 @@ const SetTable = ({user,auth}) => {
     }
 
     async function postSchedule(form){
-        let results=await axios.post(`http://35.87.21.157:5000/api/set_schedule`,form)
+        let results=await axios.post(`http://35.87.21.157:8000/api/set_schedule`,form)
     }
 
     async function postTables(form){
         for(let i=0;i<form.num_of_tables;i++){
             let data={party_size:form.table_size}
-            let results= await axios.post(`http://35.87.21.157:5000/api/all_tables`,data)
+            let results= await axios.post(`http://35.87.21.157:8000/api/all_tables`,data)
         }
     }
     return ( 
